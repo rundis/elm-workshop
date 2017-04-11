@@ -7,8 +7,6 @@ up with a random team distribution. Preferably with the same number of participa
 
 
 
-
-
 We'll start really slowly, just to get you into the groove.
 
 
@@ -40,7 +38,7 @@ Back to the terminal;
 
 ## elm-reactor
 Elm reactor is a simple web server that ships with Elm. It will serve your
-elm files (after compiling them). It's handy when you want to run your elm application.
+elm files (after compiling them). It's handy when you want to test your elm application.
 
 * `elm-reactor` - Starts a web server on port 8000
 * `open http://localhost:8000`
