@@ -1,4 +1,4 @@
-# Getting started
+# Lesson 1 : Getting started
 
 
 __We are about to build a web application for (randomly) distribute people to teams.
@@ -53,3 +53,11 @@ elm files (after compiling them). It's handy when you want to run your elm appli
 ## Bonus
 * Have a peak at the file elm-package.json
 * do `tree elm-stuff`
+* Go crazy with the available `Html.*` functions like
+  * `Html.h1 [] [ Html.text "Hello" ]` or
+  * ```elm
+  Html.div
+      []
+      [ Html.h1 [] [ Html.text "Hello"]
+      , Html.p [] [ text "I'm a paragraph" ]
+      ]```
