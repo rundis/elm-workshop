@@ -46,50 +46,39 @@ viewPeople : Model -> Html msg
 viewPeople model =
     ul
         [ class "list-group" ]
-        [ li [ class "list-group-item"] [ text "Person 1" ]
-        , li [ class "list-group-item"] [ text "Person 2" ]
-        ]
+        (List.map viewPerson model.people)
+
+
+viewPerson : Person -> Html msg
+viewPerson person =
+    li [ class "list-group-item"] [ text person.name ]
 
 
 
 -- TODO : Show the actual list of of teams
 viewTeams : Model -> Html msg
 viewTeams model =
-    div
-        [ class "row" ]
-        [ card
-            [ h4 [ class "card-header" ] [ text "Team 1" ]
-            , ul
-                [ class "list-group list-group-flush" ]
-                [ li [ class "list-group-item" ] [ text "Person 1" ]
-                , li [ class "list-group-item" ] [ text "Person 2" ]
-                ]
-            ]
-        , card
-            [ h4 [ class "card-header" ] [ text "Team 2" ]
-            , ul
-                [ class "list-group list-group-flush" ]
-                [ li [ class "list-group-item" ] [ text "Person 3" ]
-                , li [ class "list-group-item" ] [ text "Person 4" ]
-                ]
-            ]
-        , card
-            [ h4 [ class "card-header" ] [ text "Team 3" ]
-            , ul
-                [ class "list-group list-group-flush" ]
-                [ li [ class "list-group-item" ] [ text "Person 5" ]
-                , li [ class "list-group-item" ] [ text "Person 6" ]
-                ]
-            ]
-        , card
-            [ h4 [ class "card-header" ] [ text "Team 4" ]
-            , ul
-                [ class "list-group list-group-flush" ]
-                [ li [ class "list-group-item" ] [ text "Person 7" ]
-                , li [ class "list-group-item" ] [ text "Person 8" ]
-                ]
-            ]
+    let
+        teams =
+            partitionBy model.teamSize model.people
+    in
+        div
+            [ class "row" ]
+            (List.indexedMap viewTeam teams)
+
+
+viewTeam : Int -> List Person -> Html msg
+viewTeam idx members =
+    card
+        [ h4 [ class "card-header" ] [ text <| "Team " ++ toString (idx + 1) ]
+        , ul
+            [ class "list-group list-group-flush" ]
+            (List.map viewTeamMember members)
         ]
+
+viewTeamMember : Person -> Html msg
+viewTeamMember member =
+    li [ class "list-group-item" ] [ text member.name]
 
 
 card : List (Html msg) -> Html msg
