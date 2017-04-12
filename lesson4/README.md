@@ -166,7 +166,6 @@ A little checklist of things you'll need to do:
 
 
 
-
 ### Useful hints perhaps ?
 - [List.map2](http://package.elm-lang.org/packages/elm-lang/core/latest/List#map2) is useful if you need to map over 2 lists
 - Should you for some reason end up with a tuple, `Tuple.first` and `Tuple.second` might come in handy
