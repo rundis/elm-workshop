@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Array
 
 
 main : Html msg
@@ -11,7 +12,7 @@ main =
 
 type alias Model =
     { people : List Person
-    , teamSize : Int
+    , teamCount : Int
     }
 
 
@@ -24,24 +25,23 @@ type alias Person =
 initialModel : Model
 initialModel =
     { people = personList
-    , teamSize = 5
+    , teamCount = 4
     }
-
 
 
 view : Model -> Html msg
 view model =
-    div [ class "container"]
-        [ div [class "row", style [("margin", "20px 20px")] ]
-            [ h1 [ class "mx-auto" ] [ text "Team Distributor"] ]
+    div [ class "container" ]
+        [ div [ class "row", style [ ( "margin", "20px 20px" ) ] ]
+            [ h1 [ class "mx-auto" ] [ text "Team Distributor" ] ]
         , div [ class "row" ]
-            [ div [ class "col-sm-4" ] [ viewPeople model]
-            , div [ class "col-12 hidden-sm-up"] [ hr [] [] ]
-            , div [ class "col-sm-8" ] [ viewTeams model ]
+            [ div [ class "col-sm-3" ] [ viewPeople model ]
+            , div [ class "col-12 hidden-sm-up" ] [ hr [] [] ]
+            , div [ class "col-sm-9" ] [ viewTeams model ]
             ]
         ]
 
--- TODO : Show the actual list of people
+
 viewPeople : Model -> Html msg
 viewPeople model =
     ul
@@ -51,34 +51,31 @@ viewPeople model =
 
 viewPerson : Person -> Html msg
 viewPerson person =
-    li [ class "list-group-item"] [ text person.name ]
+    li [ class "list-group-item" ] [ text person.name ]
 
 
-
--- TODO : Show the actual list of of teams
 viewTeams : Model -> Html msg
 viewTeams model =
-    let
-        teams =
-            partitionBy model.teamSize model.people
-    in
-        div
-            [ class "row" ]
-            (List.indexedMap viewTeam teams)
+    div
+        [ class "row" ]
+        (List.indexedMap viewTeam <| makeTeamDistribution model)
 
 
 viewTeam : Int -> List Person -> Html msg
 viewTeam idx members =
     card
-        [ h4 [ class "card-header" ] [ text <| "Team " ++ toString (idx + 1) ]
+        [ h4
+            [ class "card-header", style [ ( "white-space", "nowrap" ) ] ]
+            [ text <| "Team " ++ toString (idx + 1) ]
         , ul
             [ class "list-group list-group-flush" ]
             (List.map viewTeamMember members)
         ]
 
+
 viewTeamMember : Person -> Html msg
 viewTeamMember member =
-    li [ class "list-group-item" ] [ text member.name]
+    li [ class "list-group-item" ] [ text member.name ]
 
 
 card : List (Html msg) -> Html msg
@@ -87,6 +84,29 @@ card children =
         [ class "col-sm" ]
         [ div [ class "card" ] children ]
 
+
+makeTeamDistribution : Model -> List (List Person)
+makeTeamDistribution { people, teamCount } =
+    let
+        balancedTeamSize =
+            (List.length people // teamCount)
+
+        balancedCount =
+            balancedTeamSize * teamCount
+
+        leftovers =
+            List.drop balancedCount people |> Array.fromList
+    in
+        partitionBy balancedTeamSize (List.take balancedCount people)
+            |> List.indexedMap
+                (\idx team ->
+                    case Array.get idx leftovers of
+                        Just p ->
+                            p :: team
+
+                        Nothing ->
+                            team
+                )
 
 
 partitionBy : Int -> List a -> List (List a)
@@ -99,7 +119,6 @@ partitionBy step items =
             partition :: partitionBy step (List.drop step items)
         else
             []
-
 
 
 personList : List Person

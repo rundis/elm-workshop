@@ -11,7 +11,7 @@ main =
 
 type alias Model =
     { people : List Person
-    , teamSize : Int
+    , teamCount : Int
     }
 
 
@@ -24,35 +24,40 @@ type alias Person =
 initialModel : Model
 initialModel =
     { people = personList
-    , teamSize = 5
+    , teamCount = 4
     }
-
 
 
 view : Model -> Html msg
 view model =
-    div [ class "container"]
-        [ div [class "row", style [("margin", "20px 20px")] ]
-            [ h1 [ class "mx-auto" ] [ text "Team Distributor"] ]
+    div [ class "container" ]
+        [ div [ class "row", style [ ( "margin", "20px 20px" ) ] ]
+            [ h1 [ class "mx-auto" ] [ text "Team Distributor" ] ]
         , div [ class "row" ]
-            [ div [ class "col-sm-4" ] [ viewPeople model]
-            , div [ class "col-12 hidden-sm-up"] [ hr [] [] ]
+            [ div [ class "col-sm-4" ] [ viewPeople model ]
+            , div [ class "col-12 hidden-sm-up" ] [ hr [] [] ]
             , div [ class "col-sm-8" ] [ viewTeams model ]
             ]
         ]
 
+
+
 -- TODO : Show the actual list of people
+
+
 viewPeople : Model -> Html msg
 viewPeople model =
     ul
         [ class "list-group" ]
-        [ li [ class "list-group-item"] [ text "Person 1" ]
-        , li [ class "list-group-item"] [ text "Person 2" ]
+        [ li [ class "list-group-item" ] [ text "Person 1" ]
+        , li [ class "list-group-item" ] [ text "Person 2" ]
         ]
 
 
 
 -- TODO : Show the actual list of of teams
+
+
 viewTeams : Model -> Html msg
 viewTeams model =
     div
@@ -99,7 +104,6 @@ card children =
         [ div [ class "card" ] children ]
 
 
-
 partitionBy : Int -> List a -> List (List a)
 partitionBy step items =
     let
@@ -110,7 +114,6 @@ partitionBy step items =
             partition :: partitionBy step (List.drop step items)
         else
             []
-
 
 
 personList : List Person
