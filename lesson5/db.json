@@ -1,0 +1,29 @@
+{
+  "people": [
+    {"id": 1, "name": "Nils"},
+    {"id": 2, "name": "Christin"},
+    {"id": 3, "name": "Eivind"},
+    {"id": 4, "name": "Christian"},
+    {"id": 5, "name": "Alf Kristian"},
+    {"id": 6, "name": "Odin"},
+    {"id": 7, "name": "August"},
+    {"id": 8, "name": "Stian"},
+    {"id": 9, "name": "Stein Tore"},
+    {"id": 10, "name": "Stig"},
+    {"id": 11, "name": "Anders"},
+    {"id": 12, "name": "Kristian"},
+    {"id": 13, "name": "Kjetil"},
+    {"id": 14, "name": "Fredrik"},
+    {"id": 15, "name": "Finn"},
+    {"id": 16, "name": "Alf"},
+    {"id": 17, "name": "Ronny"},
+    {"id": 18, "name": "Magnar"},
+    {"id": 19, "name": "Magnus"},
+    {"id": 20, "name": "Gry"},
+    {"id": 21, "name": "André"},
+    {"id": 22, "name": "Torstein"},
+    {"id": 23, "name": "Kristoffer"},
+    {"id": 24, "name": "Kolbjørn"},
+    {"id": 25, "name": "Trygve"}
+  ]
+}

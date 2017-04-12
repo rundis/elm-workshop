@@ -16,7 +16,6 @@ main =
         , subscriptions = \_ -> Sub.none
         }
 
-
 type alias Model =
     { people : List Person
     , teamCount : Int
@@ -39,8 +38,8 @@ initialModel =
 
 
 type Msg
-    = CreateRandomNumbers
-    | ReceiveRandomNumbers (List Int)
+    = RandomRequested
+    | RandomReceived (List Int)
 
 
 init : ( Model, Cmd Msg )
@@ -51,10 +50,10 @@ init =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        CreateRandomNumbers ->
+        RandomRequested ->
             ( model, createRandomRequest model )
 
-        ReceiveRandomNumbers numbers ->
+        RandomReceived numbers ->
             ( { model | randomNumbers = numbers }, Cmd.none )
 
 
@@ -63,7 +62,7 @@ createRandomRequest model =
     Random.list
         (List.length model.people)
         (Random.int 0 1000)
-        |> Random.generate ReceiveRandomNumbers
+        |> Random.generate RandomReceived
 
 
 view : Model -> Html Msg
@@ -75,7 +74,7 @@ view model =
             [ div [ class "col offset-sm-3" ]
                 [ button
                     [ class "btn btn-primary"
-                    , onClick CreateRandomNumbers
+                    , onClick RandomRequested
                     ]
                     [ text "Randomize" ]
                 ]

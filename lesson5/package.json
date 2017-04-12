@@ -5,7 +5,8 @@
   "description": "Team Distributor",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline --port 5000"
+    "dev": "webpack-dev-server --hot --inline --port 5000",
+    "api": "json-server --watch db.json --port 5001"
   },
   "author": "",
   "license": "BSD3",
@@ -17,6 +18,7 @@
     "file-loader": "^0.8.5",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "json-server": "^0.9.6"
   }
 }
