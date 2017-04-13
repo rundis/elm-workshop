@@ -1,7 +1,7 @@
 # Lesson 1 : Getting started
 
 
-__We are about to build a web application for (randomly) distribute people to teams.
+__We are about to build a web application to (randomly) distribute people to teams.
 So given a list of people and a given number of teams our app should be able to come
 up with a random team distribution. Preferably with the same number of participants per team (or as close as possible). Of course the requirements are whishy-washy and will change along the way as they generally do in any real-life project.__
 
