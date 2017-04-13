@@ -1,7 +1,7 @@
 module Route exposing (Page (..), decode, encode)
 
 
-import UrlParser exposing ((</>), s, top)
+import UrlParser exposing (s, top)
 import Navigation
 
 type Page
