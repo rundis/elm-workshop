@@ -16,6 +16,7 @@ official [Elm Guide](https://guide.elm-lang.org/) to get a better understanding 
 * Lesson 4 - [Implementing Randomization](lesson4/README.md)
 * Lesson 5 - [Retrieving data from a server](lesson5/README.md)
 * Lesson 6 - [Introducing Navigation](lesson6/README.md)
+* Lesson 7 - [Talking to JavaScript](lesson7/README.md)
 
 
 ## Installing Elm (and a few other tidbits)

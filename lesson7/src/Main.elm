@@ -1,4 +1,4 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -17,7 +17,7 @@ main =
         { init = init
         , update = update
         , view = view
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         }
 
 
@@ -26,6 +26,8 @@ type alias Model =
     , teamCount : Int
     , randomNumbers : List Int
     , page : Route.Page
+    , date : Maybe String
+    , dateSettings : DateSettings
     }
 
 
@@ -35,12 +37,22 @@ type alias Person =
     }
 
 
+
+-- ref https://api.jqueryui.com/datepicker/
+
+
+type alias DateSettings =
+    { dateFormat : String }
+
+
 initialModel : Model
 initialModel =
     { people = []
     , teamCount = 4
     , randomNumbers = []
     , page = Route.Home
+    , date = Nothing
+    , dateSettings = { dateFormat = "yy-mm-dd" }
     }
 
 
@@ -49,6 +61,7 @@ type Msg
     | RandomReceived (List Int)
     | PeopleReceived (Result Http.Error (List Person))
     | UrlChange Navigation.Location
+    | NewDate String
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -58,6 +71,29 @@ init location =
             urlUpdate location initialModel
     in
         ( model, Cmd.batch [ urlCmd, getPeople ] )
+
+
+
+-- SUBSCRIPTIONS
+
+
+{-| Outgoing port
+-}
+port initializeJquery : DateSettings -> Cmd msg
+
+
+{-| Incoming port
+-}
+port newDate : (String -> msg) -> Sub msg
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    newDate NewDate
+
+
+
+-- UPDATE
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -84,12 +120,20 @@ update msg model =
         UrlChange location ->
             urlUpdate location model
 
+        NewDate dateStr ->
+            ( { model | date = Just dateStr }, Cmd.none )
+
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
 urlUpdate location model =
     case (Route.decode location) of
         Just page ->
-            ( { model | page = page }, Cmd.none )
+            case page of
+                Route.Distribution ->
+                    ( { model | page = page }, initializeJquery model.dateSettings )
+
+                _ ->
+                    ( { model | page = page }, Cmd.none )
 
         Nothing ->
             let
@@ -106,6 +150,10 @@ createRandomRequest model =
         (List.length model.people)
         (Random.int 0 1000)
         |> Random.generate RandomReceived
+
+
+
+-- VIEW
 
 
 view : Model -> Html Msg
@@ -127,6 +175,7 @@ viewMenu model =
             ]
         ]
 
+
 navItem : Route.Page -> String -> Model -> Html Msg
 navItem page label model =
     li
@@ -146,14 +195,11 @@ viewPageContent model =
         Route.Home ->
             viewHome
 
-
         Route.Distribution ->
             viewDistribution model
 
-
         Route.People ->
             [ text "Coming soon" ]
-
 
 
 viewHome : List (Html msg)
@@ -170,22 +216,23 @@ viewHome =
 
 viewDistribution : Model -> List (Html Msg)
 viewDistribution model =
-    [div [ class "row", style [ ( "margin", "10px 10px" ) ] ]
-            [ div [ class "col-sm-3" ]
-                [ button
-                    [ class "btn btn-primary"
-                    , onClick RandomRequested
-                    ]
-                    [ text "Randomize" ]
+    [ div [ class "row", style [ ( "margin", "10px 10px" ) ] ]
+        [ div [ class "col-sm-3" ]
+            [ button
+                [ class "btn btn-primary"
+                , onClick RandomRequested
                 ]
+                [ text "Randomize" ]
             ]
-        , div [ class "row" ]
-            [ div [ class "col-sm-3" ] [ viewPeople model ]
-            , div [ class "col-12 hidden-sm-up" ] [ hr [] [] ]
-            , div [ class "col-sm-9" ] [ viewTeams model ]
-            ]
+        , div [ class "col-sm-3" ]
+            [ input [ id "datepicker", type_ "text" ] [] ]
         ]
-
+    , div [ class "row" ]
+        [ div [ class "col-sm-3" ] [ viewPeople model ]
+        , div [ class "col-12 hidden-sm-up" ] [ hr [] [] ]
+        , div [ class "col-sm-9" ] [ viewTeams model ]
+        ]
+    ]
 
 
 viewPeople : Model -> Html Msg
@@ -204,10 +251,11 @@ viewTeams : Model -> Html Msg
 viewTeams model =
     div
         [ class "row" ]
-        ([ div [ class "col-12"]
-            [ h3 [] [ text "Distribution"] ]
-        ] ++
-        (List.indexedMap viewTeam <| makeTeamDistribution model))
+        ([ div [ class "col-12" ]
+            [ h3 [] [ text "Distribution" ] ]
+         ]
+            ++ (List.indexedMap viewTeam <| makeTeamDistribution model)
+        )
 
 
 viewTeam : Int -> List Person -> Html Msg
@@ -261,6 +309,10 @@ makeTeamDistribution { people, teamCount, randomNumbers } =
                         Nothing ->
                             team
                 )
+
+
+
+-- MISC HELPERS
 
 
 partitionBy : Int -> List a -> List (List a)
