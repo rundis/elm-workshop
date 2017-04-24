@@ -13,7 +13,7 @@ official [Elm Guide](https://guide.elm-lang.org/) to get a better understanding 
 * Lesson 1 - [Getting started](lesson1/README.md)
 * Lesson 2 - [A quick Elm 1 on 1](lesson2/README.md)
 * Lesson 3 - [Working with Elm Html](lesson3/README.md)
-* Lesson 4 - [Implementing Randomization(lesson4.README.md)
+* Lesson 4 - [Implementing Randomization](lesson4/README.md)
 * Lesson 5 - [Retrieving data from a server](lesson5/README.md)
 * Lesson 6 - [Introducing Navigation](lesson6/README.md)
 
