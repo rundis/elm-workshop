@@ -8,6 +8,12 @@ To make the most of the limited time we have for the workshop, there are few thi
 official [Elm Guide](https://guide.elm-lang.org/) to get a better understanding of how Elm works in general !
 
 
+
+## Overview
+* Lesson 1 - [Getting started](lesson1/README.md)
+* Lesson 2 - [A quick Elm 1 on 1](lesson2/README.md)
+
+
 ## Installing Elm (and a few other tidbits)
 Please install Elm and set up your editor before the workshop ! If you have any problems, get in touch and we'll work it out.
 
