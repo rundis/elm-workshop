@@ -57,7 +57,7 @@ but what you are giving here is [] and List.map ... the second one is a function
 
 
 ## Your assignment
-The `lesson3` folder contains some example code to get you started. Your task is to complete the listing of people and provide a hard coded team distribution with the given team size (of 5). To help you out there is even a helper function to partiion lists in case you didn't complete that in the previous lesson :)
+The `lesson3` folder contains some example code to get you started. Your task is to complete the listing of people and provide a hard coded team distribution with the given team count (of 5). To help you out there is even a helper function to partition lists in case you didn't complete that in the previous lesson :)
 
 
 To give you a sane feedback loop, we've had to pull in some JavaScript stuff because the elm-reactor doesn't support hot reloading.

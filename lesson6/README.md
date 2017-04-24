@@ -106,7 +106,7 @@ encode route =
 ## Filling in the missing pieces
 
 
-Let's start with creating an function for dealing with url changes.
+Let's start with creating a function for dealing with url changes.
 
 
 ```elm

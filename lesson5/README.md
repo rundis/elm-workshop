@@ -154,10 +154,10 @@ You are going to get rid of the hard coded list of people and retrieve them from
   - `npm install`
   - `npm run dev`
   - `open http://localhost:5000`
-- Open another terminal for your server
+- Open another terminal for your api server
   - `cd lesson5`
   - `npm run api`
-- Open your Editor and start making working your magic
+- Open your Editor and start working your magic
 
 
 
