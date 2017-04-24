@@ -13,6 +13,7 @@ In a terminal window:
 
 
 > When evaluating multiline expressions in the repl, you need to terminate each line with a backslash !
+![Elm Repl](https://github.com/rundis/elm-workshop/blob/master/lesson2/repl.png)
 
 
 ## Values
