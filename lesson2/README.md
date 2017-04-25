@@ -114,7 +114,7 @@ List.filter ((>) 3) [1,2,3,4]
 
 
 List.foldl
-List.foldl (\acc x -> acc + x) 0 [1,2,3,4]
+List.foldl (\x acc -> acc + x) 0 [1,2,3,4]
 List.foldl add 0 [1,2,3,4]
 
 
