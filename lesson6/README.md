@@ -1,4 +1,4 @@
-# Lesson 7 - Introducing Navigation
+# Lesson 6 - Introducing Navigation
 
 We've done a great job so far, but the requirements keep pouring in. So far we've had just a single page. And allthough we are making a Single Page Application, we want to be able to have multiple pages, we just don't wont to hit the server with a full page reload. In this lesson you'll learn how to use the [elm-navigation](http://package.elm-lang.org/packages/elm-lang/navigation/latest) and [url-parser](http://package.elm-lang.org/packages/evancz/url-parser/latest) packages to introduce page navigation in the Team Distributor application.
 
@@ -181,7 +181,7 @@ update msg model =
 ### Getting started
 - `cd lesson6`
 - `npm install`
-- `elm-package install --yes elm-lang/nagivation`
+- `elm-package install --yes elm-lang/navigation`
 - `elm-package install --yes evancz/url-parser`
 - `npm run dev`
 

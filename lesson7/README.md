@@ -231,8 +231,6 @@ viewDistribution model =
 ### Getting started
 - `cd lesson7`
 - `npm install`
-- `elm-package install --yes elm-lang/nagivation`
-- `elm-package install --yes evancz/url-parser`
 - `npm run dev`
 
 In another terminal:
