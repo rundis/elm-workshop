@@ -102,16 +102,18 @@ The two functions you'll be using in your assignment is
 - `get` : This function creates a `Request`. However you'll be needing a command so you'll need to pass that request on to the other function you'll be using
 - `send` : This function turns a `Request` into a `Cmd`, something that fits nicely into what we need !
 
+```elm
+Http.get "http://myserver.com/artists" artistsDecoder
+        |> Http.send ArtistListResponse
+```
+
+
 
 > What the fark is this `(Result Error a -> msg)` ?
 
 > Well, 2 things can fail when dealing with Http. One is that the http request can fail, the other thing that can fail is the Json decoding. We need to deal with both the success case and the error case. `Result` is a type that capture this dualstate of success or error.
 
-> ```elm
-type Result error value
-    = Ok value
-    | Err error
-```
+> ```elm type Result error value = Ok value | Err error```
 A `Result` can either be `Ok` with a value or it can be `Err` with an error
 
 So you might have a message defined like this:
@@ -125,7 +127,7 @@ In your update function you might deal with it like this
 ```elm
 update msg model =
     case msg of
-        ArtistListRespons res ->
+        ArtistListResponse res ->
             case res of ->
                 Result.Ok artists ->
                     -- store the list in your model probably

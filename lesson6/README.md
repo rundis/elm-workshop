@@ -96,7 +96,7 @@ encode route =
             "/#"
 
         Artists ->
-            "#/artists"
+            "/#artists"
 
         Albums ->
             "/#albums"
