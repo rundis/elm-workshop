@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Array
 
 
@@ -58,7 +59,9 @@ viewTeams : Model -> Html msg
 viewTeams model =
     div
         [ class "row" ]
-        (List.indexedMap viewTeam <| makeTeamDistribution model)
+        ( makeTeamDistribution model.teamCount model.people
+            |> List.indexedMap viewTeam
+        )
 
 
 viewTeam : Int -> List Person -> Html msg
@@ -85,8 +88,8 @@ card children =
         [ div [ class "card" ] children ]
 
 
-makeTeamDistribution : Model -> List (List Person)
-makeTeamDistribution { people, teamCount } =
+makeTeamDistribution : Int -> List Person -> List (List Person)
+makeTeamDistribution teamCount people =
     let
         balancedTeamSize =
             (List.length people // teamCount)

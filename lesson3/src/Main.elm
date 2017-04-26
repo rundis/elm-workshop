@@ -24,7 +24,7 @@ type alias Person =
 initialModel : Model
 initialModel =
     { people = personList
-    , teamCount = 4
+    , teamCount = 5
     }
 
 
