@@ -51,17 +51,15 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         RandomRequested ->
-            ( model, createRandomRequest model )
+            ( model, createRandomRequest (List.length model.people) )
 
         RandomReceived numbers ->
             ( { model | randomNumbers = numbers }, Cmd.none )
 
 
-createRandomRequest : Model -> Cmd Msg
-createRandomRequest model =
-    Random.list
-        (List.length model.people)
-        (Random.int 0 1000)
+createRandomRequest : Int -> Cmd Msg
+createRandomRequest size =
+    Random.list size (Random.int 0 1000)
         |> Random.generate RandomReceived
 
 
@@ -103,7 +101,10 @@ viewTeams : Model -> Html Msg
 viewTeams model =
     div
         [ class "row" ]
-        (List.indexedMap viewTeam <| makeTeamDistribution model)
+        ( randomizePeople model.randomNumbers model.people
+            |> makeTeamDistribution model.teamCount
+            |> List.indexedMap viewTeam
+        )
 
 
 viewTeam : Int -> List Person -> Html Msg
@@ -130,8 +131,15 @@ card children =
         [ div [ class "card" ] children ]
 
 
-makeTeamDistribution : Model -> List (List Person)
-makeTeamDistribution { people, teamCount, randomNumbers } =
+
+randomizePeople : List Int -> List Person -> List Person
+randomizePeople  randomNumbers people =
+    List.map2 (,) randomNumbers people
+        |> List.sortBy Tuple.first
+        |> List.map Tuple.second
+
+makeTeamDistribution : Int -> List Person -> List (List Person)
+makeTeamDistribution teamCount people =
     let
         balancedTeamSize =
             (List.length people // teamCount)
@@ -139,15 +147,10 @@ makeTeamDistribution { people, teamCount, randomNumbers } =
         balancedCount =
             balancedTeamSize * teamCount
 
-        shuffled =
-            List.map2 (,) randomNumbers people
-                |> List.sortBy Tuple.first
-                |> List.map Tuple.second
-
         leftovers =
-            List.drop balancedCount shuffled |> Array.fromList
+            List.drop balancedCount people |> Array.fromList
     in
-        partitionBy balancedTeamSize (List.take balancedCount shuffled)
+        partitionBy balancedTeamSize (List.take balancedCount people)
             |> List.indexedMap
                 (\idx team ->
                     case Array.get idx leftovers of

@@ -100,7 +100,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         RandomRequested ->
-            ( model, createRandomRequest model )
+            ( model, createRandomRequest <| List.length model.people )
 
         RandomReceived numbers ->
             ( { model | randomNumbers = numbers }, Cmd.none )
@@ -108,7 +108,7 @@ update msg model =
         PeopleReceived res ->
             case res of
                 Ok people ->
-                    ( { model | people = people }, Cmd.none )
+                    ( { model | people = people }, createRandomRequest <| List.length people )
 
                 Err err ->
                     let
@@ -144,11 +144,9 @@ urlUpdate location model =
                 ( model, Cmd.none )
 
 
-createRandomRequest : Model -> Cmd Msg
-createRandomRequest model =
-    Random.list
-        (List.length model.people)
-        (Random.int 0 1000)
+createRandomRequest : Int -> Cmd Msg
+createRandomRequest size =
+    Random.list size (Random.int 0 1000)
         |> Random.generate RandomReceived
 
 

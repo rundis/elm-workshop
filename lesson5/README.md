@@ -161,6 +161,8 @@ You are going to get rid of the hard coded list of people and retrieve them from
   - `npm run api`
 - Open your Editor and start working your magic
 
+### Bonus
+- It would be nice to show an initial distribution when you open the page the first time. Make it happen !
 
 
 
