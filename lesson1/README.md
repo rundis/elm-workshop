@@ -53,9 +53,11 @@ elm files (after compiling them). It's handy when you want to test your elm appl
 * do `tree elm-stuff`
 * Go crazy with the available `Html.*` functions like
   * `Html.h1 [] [ Html.text "Hello" ]` or
-  * ```elm
-  Html.div
-      []
-      [ Html.h1 [] [ Html.text "Hello"]
-      , Html.p [] [ text "I'm a paragraph" ]
-      ]```
+
+```elm
+Html.div
+    []
+    [ Html.h1 [] [ Html.text "Hello"]
+    , Html.p [] [ text "I'm a paragraph" ]
+    ]
+```
