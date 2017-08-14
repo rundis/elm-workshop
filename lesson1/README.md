@@ -58,6 +58,6 @@ elm files (after compiling them). It's handy when you want to test your elm appl
 Html.div
     []
     [ Html.h1 [] [ Html.text "Hello"]
-    , Html.p [] [ text "I'm a paragraph" ]
+    , Html.p [] [ Html.text "I'm a paragraph" ]
     ]
 ```
